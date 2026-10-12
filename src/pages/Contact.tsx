@@ -3,6 +3,7 @@ import { useState } from 'react';
 const Contact = () => {
   const [contactForm, setContactForm] = useState({ name: '', email: '', subject: '', message: '' });
   const [contactSubmitted, setContactSubmitted] = useState(false);
+  const [error, setError] = useState('');
 
   const handleContactChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -11,11 +12,8 @@ const Contact = () => {
 
   const handleContactSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setContactSubmitted(true);
-    setTimeout(() => {
-      setContactSubmitted(false);
-      setContactForm({ name: '', email: '', subject: '', message: '' });
-    }, 3500);
+    setContactSubmitted(false);
+    setError('Message delivery is temporarily unavailable. Your message has not been sent. Please try again later.');
   };
 
   const departments = [
@@ -60,6 +58,7 @@ const Contact = () => {
               </div>
             ) : (
               <form onSubmit={handleContactSubmit} className="space-y-6">
+                {error && <p role="alert" className="text-sm text-[#C9A84C]">{error}</p>}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
                     <label style={labelStyle}>Name *</label>

@@ -6,6 +6,7 @@ const Reservations = () => {
     guests: '2', occasion: 'none', specialRequests: '',
   });
   const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState('');
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -14,12 +15,10 @@ const Reservations = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Reservation submitted:', formData);
-    setSubmitted(true);
-    setTimeout(() => {
-      setSubmitted(false);
-      setFormData({ name: '', email: '', phone: '', date: '', time: '19:00', guests: '2', occasion: 'none', specialRequests: '' });
-    }, 4000);
+    // Preserve the request while email delivery is being connected. Never
+    // claim a booking or confirmation email without a successful server action.
+    setSubmitted(false);
+    setError('Reservation requests are temporarily unavailable. Your reservation has not been booked. Please try again later.');
   };
 
   const availableTimes = ['17:00', '17:30', '18:00', '18:30', '19:00', '19:30', '20:00', '20:30', '21:00'];
@@ -31,7 +30,8 @@ const Reservations = () => {
     { value: 'business', label: 'Business Dinner' },
     { value: 'celebration', label: 'Celebration' },
   ];
-  const today = new Date().toISOString().split('T')[0];
+  const now = new Date();
+  const today = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
 
   const labelStyle = { fontFamily: 'Montserrat, sans-serif', fontSize: '0.6rem', letterSpacing: '0.2em', textTransform: 'uppercase' as const, color: '#8C8070', display: 'block', marginBottom: '0.5rem' };
   const inputStyle = { width: '100%', padding: '12px 16px', borderRadius: 0 };
@@ -68,6 +68,7 @@ const Reservations = () => {
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-6">
+                {error && <p role="alert" className="text-sm text-[#C9A84C]">{error}</p>}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
                     <label style={labelStyle}>Full Name *</label>

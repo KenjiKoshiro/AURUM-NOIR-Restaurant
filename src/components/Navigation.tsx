@@ -8,6 +8,7 @@ const Navigation = () => {
   const [scrolled, setScrolled] = useState(false);
   const [visible, setVisible] = useState(true);
   const [lastY, setLastY] = useState(0);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -22,11 +23,20 @@ const Navigation = () => {
 
   // Reset visibility on route change
   useEffect(() => {
+    setMenuOpen(false);
     setVisible(true);
     setScrolled(false);
     setLastY(0);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, [location.pathname]);
+
+  useEffect(() => {
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setMenuOpen(false);
+    };
+    window.addEventListener('keydown', closeOnEscape);
+    return () => window.removeEventListener('keydown', closeOnEscape);
+  }, []);
 
   const navItems = [
     { name: 'Home', path: '/' },
@@ -44,7 +54,7 @@ const Navigation = () => {
           ? '1px solid rgba(201,168,76,0.22)'
           : '1px solid rgba(201,168,76,0.07)',
         boxShadow: scrolled ? '0 8px 48px rgba(0,0,0,0.65)' : 'none',
-        transform: visible ? 'translateY(0)' : 'translateY(-100%)',
+        transform: visible || menuOpen ? 'translateY(0)' : 'translateY(-100%)',
         transition:
           'background 0.5s ease, border-color 0.5s ease, box-shadow 0.5s ease, transform 0.4s cubic-bezier(0.4,0,0.2,1)',
       }}
@@ -148,7 +158,28 @@ const Navigation = () => {
           <Link to="/reservations" className="btn-gold rounded-none px-7 py-3">
             <span>Reserve</span>
           </Link>
+          <button
+            type="button"
+            className="md:hidden px-3 py-2 text-[#C9A84C]"
+            aria-expanded={menuOpen}
+            aria-controls="mobile-navigation"
+            aria-label={menuOpen ? 'Close navigation' : 'Open navigation'}
+            onClick={() => setMenuOpen(open => !open)}
+          >
+            {menuOpen ? '✕' : '☰'}
+          </button>
         </div>
+        {menuOpen && (
+          <div id="mobile-navigation" className="mt-5 flex flex-col gap-4 border-t border-[#C9A84C]/20 pt-5 md:hidden">
+            {navItems.map(item => (
+              <Link key={item.path} to={item.path} aria-current={currentPath === item.path ? 'page' : undefined}
+                className="py-2 text-sm uppercase tracking-widest text-[#F5F0E8]"
+                onClick={() => setMenuOpen(false)}>
+                {item.name}
+              </Link>
+            ))}
+          </div>
+        )}
       </div>
     </nav>
   );
