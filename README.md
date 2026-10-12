@@ -172,7 +172,7 @@ Active nav links show an animated gold underline that slides in from the left. H
 Category and dietary filters work independently and in combination. Filtering is instant with no network requests — all data is in-memory.
 
 ### Form States
-Both the reservation and contact forms handle a submitted state — the form is replaced by a branded confirmation panel, then automatically resets after a few seconds.
+Reservation and contact forms retain the entered request and show an unavailable message until verified email delivery is connected. They do not claim a booking or sent email without a successful server response.
 
 ### Responsive Layout
-All pages use Tailwind's responsive grid utilities (`grid-cols-1 md:grid-cols-2 lg:grid-cols-4` etc.). The navigation collapses its link list on mobile (hamburger menu not yet implemented — links are hidden below `md` breakpoint).
+All pages use Tailwind's responsive grid utilities (`grid-cols-1 md:grid-cols-2 lg:grid-cols-4` etc.). A mobile menu exposes every navigation link below the `md` breakpoint and closes on route selection or Escape.
