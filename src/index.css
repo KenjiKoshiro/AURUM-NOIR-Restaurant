@@ -141,3 +141,23 @@ select.luxury-input option { background: var(--charcoal); color: var(--ivory); }
 ::-webkit-scrollbar-thumb:hover { background: var(--gold); }
 
 details summary::-webkit-details-marker { display: none; }
+
+/* Shared, accessible controls for the demo flows. */
+:root { --muted: #B4AA9B; }
+.demo-notice { padding: 14px 24px; background: #19160f; color: var(--gold-light); text-align: center; font-size: .875rem; }
+.skip-link { position: fixed; top: 8px; left: 8px; transform: translateY(-160%); z-index: 100; background: var(--gold); color: var(--obsidian); padding: 12px; }
+.skip-link:focus { transform: none; }
+:focus-visible { outline: 2px solid var(--gold-light); outline-offset: 5px; }
+button, select, input, textarea, .btn-gold, .btn-outline-gold { min-height: 44px; }
+button { cursor: pointer; }
+.form-field { display: flex; flex-direction: column; gap: 10px; font-size: 1rem; color: var(--ivory); }
+.form-field .luxury-input { padding: 12px 14px; font-size: 1rem; }
+select option { background: var(--charcoal); color: var(--ivory); }
+.page-heading { text-align: center; max-width: 680px; margin: 0 auto 48px; }
+.page-heading h1 { font-size: clamp(2.5rem, 6vw, 4rem); margin: 12px 0; }
+.page-heading p { line-height: 1.8; color: var(--muted); }
+.eyebrow { color: var(--gold) !important; text-transform: uppercase; letter-spacing: .15em; font-size: .875rem; }
+h2 { font-size: 1.75rem; } h3 { font-size: 1.35rem; }
+.summary-grid { display: grid; grid-template-columns: 90px 1fr; gap: 16px; }
+.summary-grid dt { color: var(--muted); }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; } }

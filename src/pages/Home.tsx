@@ -73,7 +73,7 @@ const Home = () => {
 
             <div className="gold-line" style={{ margin: '0 0 1.75rem 0' }} />
 
-            <p style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '0.85rem', lineHeight: 2, color: '#8C8070', fontWeight: 300, marginBottom: '2.5rem', maxWidth: '480px' }}>
+            <p style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '0.85rem', lineHeight: 2, color: 'var(--muted)', fontWeight: 300, marginBottom: '2.5rem', maxWidth: '480px' }}>
               An intimate world of extraordinary cuisine crafted by Michelin-starred hands. Every evening, a story told through flavour, texture, and art.
             </p>
 
@@ -140,7 +140,7 @@ const Home = () => {
                 </div>
                 <div className="p-6">
                   <h3 style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: '1.4rem', fontWeight: 400, color: '#F5F0E8', marginBottom: '0.5rem' }}>{dish.name}</h3>
-                  <p style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '0.72rem', color: '#8C8070', lineHeight: 1.8, fontWeight: 300 }}>{dish.description}</p>
+                  <p style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '0.72rem', color: 'var(--muted)', lineHeight: 1.8, fontWeight: 300 }}>{dish.description}</p>
                 </div>
               </div>
             ))}
@@ -170,7 +170,7 @@ const Home = () => {
                 </p>
                 <div style={{ width: '30px', height: '1px', background: 'rgba(201,168,76,0.4)', margin: '0 auto 1rem' }} />
                 <div style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '0.72rem', fontWeight: 500, color: '#C9A84C', letterSpacing: '0.1em' }}>{t.author}</div>
-                <div style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '0.62rem', color: '#8C8070', marginTop: '3px', letterSpacing: '0.08em' }}>{t.role}</div>
+                <div style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '0.62rem', color: 'var(--muted)', marginTop: '3px', letterSpacing: '0.08em' }}>{t.role}</div>
               </div>
             ))}
           </div>
@@ -193,7 +193,7 @@ const Home = () => {
                 Join Us for an Unforgettable Evening
               </h2>
               <div className="gold-line" style={{ marginBottom: '1.5rem' }} />
-              <p style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '0.78rem', color: '#8C8070', lineHeight: 2, maxWidth: '480px', margin: '0 auto 2.5rem', fontWeight: 300 }}>
+              <p style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '0.78rem', color: 'var(--muted)', lineHeight: 2, maxWidth: '480px', margin: '0 auto 2.5rem', fontWeight: 300 }}>
                 Tables are limited. Each evening is an exclusive, intimate experience crafted entirely for you.
               </p>
               <Link to="/reservations" className="btn-gold px-12 py-4 inline-block">

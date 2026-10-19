@@ -176,3 +176,17 @@ Reservation and contact forms retain the entered request and show an unavailable
 
 ### Responsive Layout
 All pages use Tailwind's responsive grid utilities (`grid-cols-1 md:grid-cols-2 lg:grid-cols-4` etc.). A mobile menu exposes every navigation link below the `md` breakpoint and closes on route selection or Escape.
+
+## Maintenance - 19 October 2026
+
+Portfolio demo only: all restaurant information is fictional. Reservation plans
+and contact previews run in memory without sending emails, accepting payments,
+or creating bookings. No personal details are requested.
+
+Added ingredient/name search, combined dietary/category filters, result counts,
+reset controls, and price sorting (ranges use their starting price). Demo plans
+validate local calendar dates, party size and arrival slots. Sunday has earlier
+slots. Private dining links to a prefilled enquiry. Added associated labels,
+keyboard focus/skip navigation, reduced motion, and readable demo controls.
+
+Run `npm test`, `npm run typecheck`, and `npm run build` to verify the project.
