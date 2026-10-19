@@ -1,133 +1,101 @@
-import { useState } from 'react';
+import { useState } from "react";
+import { useSearchParams } from "react-router-dom";
 
-const Contact = () => {
-  const [contactForm, setContactForm] = useState({ name: '', email: '', subject: '', message: '' });
-  const [contactSubmitted, setContactSubmitted] = useState(false);
-
-  const handleContactChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setContactForm(prev => ({ ...prev, [name]: value }));
-  };
-
-  const handleContactSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setContactSubmitted(true);
-    setTimeout(() => {
-      setContactSubmitted(false);
-      setContactForm({ name: '', email: '', subject: '', message: '' });
-    }, 3500);
-  };
-
-  const departments = [
-    { name: 'General', email: 'hello@aurumetnoir.com', phone: '(555) 123-4567' },
-    { name: 'Reservations', email: 'reserve@aurumetnoir.com', phone: '(555) 123-4568' },
-    { name: 'Private Events', email: 'events@aurumetnoir.com', phone: '(555) 123-4569' },
-    { name: 'Press & Media', email: 'press@aurumetnoir.com', phone: '(555) 123-4570' },
-  ];
-
-  const faqs = [
-    { question: 'What is the dress code?', answer: 'Smart casual to formal. We recommend guests embrace the occasion — the dining room has its own quiet elegance.' },
-    { question: 'Do you accommodate dietary restrictions?', answer: 'Absolutely. Please note restrictions at booking and our chef will craft suitable alternatives without compromise.' },
-    { question: 'Is valet parking available?', answer: 'Yes, complimentary valet is available for all dining guests from 4:30pm.' },
-    { question: 'Can I bring my own wine?', answer: 'We welcome personal cellar selections at a corkage fee of $45 per bottle, maximum two per table.' },
-  ];
-
-  const labelStyle = { fontFamily: 'Montserrat, sans-serif', fontSize: '0.6rem', letterSpacing: '0.2em', textTransform: 'uppercase' as const, color: '#8C8070', display: 'block', marginBottom: '0.5rem' };
-  const inputStyle = { width: '100%', padding: '12px 16px', borderRadius: 0 };
-
+export default function Contact() {
+  const [params] = useSearchParams();
+  const [subject, setSubject] = useState(
+    params.get("subject") ?? "General enquiry",
+  );
+  const [message, setMessage] = useState("");
+  const [preview, setPreview] = useState(false);
   return (
-    <div style={{ background: '#0A0A0A', minHeight: '100vh' }}>
-      <div className="container mx-auto px-6 py-24">
-        <div className="mb-20 text-center">
-          <div style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '0.6rem', letterSpacing: '0.4em', color: '#C9A84C', textTransform: 'uppercase', marginBottom: '1rem' }}>Get in Touch</div>
-          <h1 style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: '3.5rem', fontWeight: 300, color: '#F5F0E8', marginBottom: '1rem' }}>Contact Us</h1>
-          <div className="gold-line" />
-        </div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-          {/* Contact Form */}
-          <div className="luxury-card p-10">
-            <h2 style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: '1.8rem', fontWeight: 300, color: '#F5F0E8', marginBottom: '2rem' }}>Send a Message</h2>
-
-            {contactSubmitted ? (
-              <div className="text-center py-12">
-                <div style={{ width: '60px', height: '60px', border: '1px solid #C9A84C', borderRadius: '50%', margin: '0 auto 1.5rem', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  <span style={{ color: '#C9A84C', fontSize: '1.3rem' }}>✓</span>
-                </div>
-                <h3 style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: '1.8rem', fontWeight: 300, color: '#F5F0E8', marginBottom: '1rem' }}>Message Sent</h3>
-                <div className="gold-line" style={{ marginBottom: '1rem' }} />
-                <p style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '0.72rem', color: '#8C8070', lineHeight: 2 }}>We will respond within 24–48 hours.</p>
-              </div>
-            ) : (
-              <form onSubmit={handleContactSubmit} className="space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div>
-                    <label style={labelStyle}>Name *</label>
-                    <input type="text" name="name" value={contactForm.name} onChange={handleContactChange} required className="luxury-input" style={inputStyle} placeholder="Your name" />
-                  </div>
-                  <div>
-                    <label style={labelStyle}>Email *</label>
-                    <input type="email" name="email" value={contactForm.email} onChange={handleContactChange} required className="luxury-input" style={inputStyle} placeholder="you@example.com" />
-                  </div>
-                </div>
-                <div>
-                  <label style={labelStyle}>Subject *</label>
-                  <input type="text" name="subject" value={contactForm.subject} onChange={handleContactChange} required className="luxury-input" style={inputStyle} placeholder="How can we help?" />
-                </div>
-                <div>
-                  <label style={labelStyle}>Message *</label>
-                  <textarea name="message" value={contactForm.message} onChange={handleContactChange} required rows={5} className="luxury-input" style={{ ...inputStyle, resize: 'none' }} placeholder="Your message..." />
-                </div>
-                <button type="submit" className="btn-gold w-full py-4">
-                  <span>Send Message</span>
-                </button>
-              </form>
-            )}
-          </div>
-
-          {/* Info */}
-          <div className="space-y-6">
-            <div className="luxury-card p-8">
-              <h3 style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: '1.4rem', fontWeight: 400, color: '#C9A84C', marginBottom: '1.5rem' }}>Departments</h3>
-              <div className="space-y-6">
-                {departments.map((d, i) => (
-                  <div key={i} className="flex items-start gap-4">
-                    <div style={{ width: '36px', height: '36px', border: '1px solid rgba(201,168,76,0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                      <span style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: '1rem', color: '#C9A84C' }}>{d.name[0]}</span>
-                    </div>
-                    <div>
-                      <div style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '0.65rem', fontWeight: 500, letterSpacing: '0.1em', color: '#F5F0E8', textTransform: 'uppercase', marginBottom: '4px' }}>{d.name}</div>
-                      <div style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '0.68rem', color: '#8C8070', lineHeight: 2, fontWeight: 300 }}>
-                        <div>{d.email}</div>
-                        <div>{d.phone}</div>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
+    <div className="container mx-auto px-6 py-16">
+      <header className="page-heading">
+        <p className="eyebrow">A portfolio experience</p>
+        <h1>Try an enquiry</h1>
+        <p>
+          This restaurant is fictional. Preview a message here; nothing is sent
+          or stored. Please use fictional information.
+        </p>
+      </header>
+      <div className="grid gap-8 lg:grid-cols-2">
+        <section className="luxury-card p-6 md:p-10">
+          <h2 className="mb-6">Demo enquiry</h2>
+          <form
+            className="space-y-6"
+            onSubmit={(e) => {
+              e.preventDefault();
+              setPreview(true);
+            }}
+          >
+            <label className="form-field">
+              Subject
+              <input
+                required
+                maxLength={120}
+                className="luxury-input"
+                value={subject}
+                onChange={(e) => {
+                  setSubject(e.target.value);
+                  setPreview(false);
+                }}
+              />
+            </label>
+            <label className="form-field">
+              Message
+              <textarea
+                required
+                maxLength={2000}
+                rows={6}
+                className="luxury-input"
+                value={message}
+                onChange={(e) => {
+                  setMessage(e.target.value);
+                  setPreview(false);
+                }}
+              />
+            </label>
+            <button className="btn-gold px-6 py-4" type="submit">
+              <span>Preview demo message</span>
+            </button>
+          </form>
+          {preview && (
+            <section
+              role="status"
+              className="mt-8 border-t border-[var(--muted)] pt-6"
+            >
+              <h3>Demo preview — not sent</h3>
+              <p className="mt-3 font-semibold">{subject}</p>
+              <p className="mt-3 whitespace-pre-wrap break-words">{message}</p>
+            </section>
+          )}
+        </section>
+        <section className="luxury-card p-6 md:p-10">
+          <h2>Good to know</h2>
+          <dl className="space-y-6 mt-6">
+            <div>
+              <dt className="font-semibold">Is this a real restaurant?</dt>
+              <dd className="mt-2 text-[var(--muted)]">
+                No. Aurum & Noir is a portfolio concept. Addresses, menus,
+                awards, team stories, and prices are illustrative.
+              </dd>
             </div>
-
-            <div className="luxury-card p-8">
-              <h3 style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: '1.4rem', fontWeight: 400, color: '#C9A84C', marginBottom: '1.5rem' }}>FAQ</h3>
-              <div className="space-y-2">
-                {faqs.map((faq, i) => (
-                  <details key={i} style={{ borderBottom: '1px solid rgba(201,168,76,0.1)' }}>
-                    <summary style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '0.7rem', letterSpacing: '0.06em', color: '#EAE3D5', padding: '12px 0', cursor: 'pointer', listStyle: 'none', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                      {faq.question}
-                      <span style={{ color: '#C9A84C', fontSize: '0.8rem' }}>+</span>
-                    </summary>
-                    <div style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '0.7rem', color: '#8C8070', lineHeight: 1.9, fontWeight: 300, paddingBottom: '12px' }}>
-                      {faq.answer}
-                    </div>
-                  </details>
-                ))}
-              </div>
+            <div>
+              <dt className="font-semibold">Can I make a booking?</dt>
+              <dd className="mt-2 text-[var(--muted)]">
+                The reservation page creates a sample plan only.
+              </dd>
             </div>
-          </div>
-        </div>
+            <div>
+              <dt className="font-semibold">What do dietary labels mean?</dt>
+              <dd className="mt-2 text-[var(--muted)]">
+                They demonstrate menu filtering. They are not verified allergen
+                or preparation information.
+              </dd>
+            </div>
+          </dl>
+        </section>
       </div>
     </div>
   );
-};
-
-export default Contact;
+}
